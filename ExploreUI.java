@@ -1,5 +1,3 @@
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,21 +11,21 @@ import java.nio.file.Paths;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class ExploreUI extends JFrame {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
-    private static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
+    // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
+    private static final int IMAGE_SIZE = Config.FRAME_WIDTH / 3;
 
     public ExploreUI() {
         setTitle("Explore");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setSize(Config.FRAME_SIZE);
+        setMinimumSize(Config.FRAME_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         initializeUI();
@@ -65,7 +63,7 @@ public class ExploreUI extends JFrame {
     JPanel imageGridPanel = new JPanel(new GridLayout(0, 3, 2, 2)); // 3 columns, auto rows
 
     // Load images from the uploaded folder
-    File imageDir = new File("img/uploaded");
+    File imageDir = new File(Config.UPLOADED_IMG_DIR);
     if (imageDir.exists() && imageDir.isDirectory()) {
         File[] imageFiles = imageDir.listFiles((dir, name) -> name.matches(".*\\.(png|jpg|jpeg)"));
         if (imageFiles != null) {
@@ -101,12 +99,12 @@ public class ExploreUI extends JFrame {
         // Header Panel (reuse from InstagramProfileUI or customize for home page)
          // Header with the Register label
          JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
+         headerPanel.setBackground(Config.HEADER_BG_COLOR); // Set a darker background for the header
          JLabel lblRegister = new JLabel(" Explore 🐥");
          lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
          lblRegister.setForeground(Color.WHITE); // Set the text color to white
          headerPanel.add(lblRegister);
-         headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
+         headerPanel.setPreferredSize(new Dimension(Config.FRAME_WIDTH, 40));
          return headerPanel;
    }
 
@@ -217,7 +215,7 @@ topPanel.add(timeLabel, BorderLayout.EAST);
  JButton backButton = new JButton("Back");
 
  // Make the button take up the full width
- backButton.setPreferredSize(new Dimension(WIDTH-20, backButton.getPreferredSize().height));
+ backButton.setPreferredSize(new Dimension(Config.FRAME_WIDTH - 20, backButton.getPreferredSize().height));
 
  backButtonPanel.add(backButton);
 
@@ -258,7 +256,7 @@ topPanel.add(timeLabel, BorderLayout.EAST);
 
 private JButton createIconButton(String iconPath, String buttonType) {
     ImageIcon iconOriginal = new ImageIcon(iconPath);
-    Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
+    Image iconScaled = iconOriginal.getImage().getScaledInstance(Config.NAV_ICON_SIZE, Config.NAV_ICON_SIZE, Image.SCALE_SMOOTH);
     JButton button = new JButton(new ImageIcon(iconScaled));
     button.setBorder(BorderFactory.createEmptyBorder());
     button.setContentAreaFilled(false);
