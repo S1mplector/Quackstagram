@@ -10,8 +10,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ImageUploadUI extends JFrame {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
     private JLabel imagePreviewLabel;
     private JTextArea bioTextArea;
     private JButton uploadButton;
@@ -21,8 +21,8 @@ public class ImageUploadUI extends JFrame {
     public ImageUploadUI() {
         this.imageManager = new ImageManager();
         setTitle("Upload Image");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setSize(Config.FRAME_SIZE);
+        setMinimumSize(Config.FRAME_SIZE);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         initializeUI();
@@ -42,13 +42,13 @@ public class ImageUploadUI extends JFrame {
 
         imagePreviewLabel = new JLabel();
         imagePreviewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePreviewLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT / 3));
+        imagePreviewLabel.setPreferredSize(new Dimension(Config.FRAME_WIDTH, Config.FRAME_HEIGHT / 3));
         contentPanel.add(imagePreviewLabel);
 
         bioTextArea = new JTextArea("Enter a caption");
         bioTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
         JScrollPane bioScrollPane = new JScrollPane(bioTextArea);
-        bioScrollPane.setPreferredSize(new Dimension(WIDTH - 50, HEIGHT / 6));
+        bioScrollPane.setPreferredSize(new Dimension(Config.FRAME_WIDTH - 50, Config.FRAME_HEIGHT / 6));
         contentPanel.add(bioScrollPane);
 
         uploadButton = new JButton("Upload Image");
@@ -78,7 +78,7 @@ public class ImageUploadUI extends JFrame {
 
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        headerPanel.setBackground(new Color(51, 51, 51));
+        headerPanel.setBackground(Config.HEADER_BG_COLOR);
         JLabel lblTitle = new JLabel(" Upload Image 🐥");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitle.setForeground(Color.WHITE);
@@ -106,7 +106,7 @@ class ImageManager {
             String fileExtension = getFileExtension(selectedFile);
             String newFileName = username + "_" + imageId + "." + fileExtension;
 
-            Path destPath = Paths.get("img", "uploaded", newFileName);
+            Path destPath = Paths.get(Config.UPLOADED_IMG_DIR, newFileName);
             Files.copy(selectedFile.toPath(), destPath, StandardCopyOption.REPLACE_EXISTING);
 
             saveImageInfo(username + "_" + imageId, username, bio);
@@ -127,7 +127,7 @@ class ImageManager {
     }
 
     private void saveImageInfo(String imageId, String username, String bio) throws IOException {
-        Path infoFilePath = Paths.get("img", "image_details.txt");
+        Path infoFilePath = Paths.get(Config.IMAGE_DETAILS_FILE);
         if (!Files.exists(infoFilePath)) {
             Files.createFile(infoFilePath);
         }
