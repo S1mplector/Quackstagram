@@ -4,7 +4,15 @@ import java.util.stream.Collectors;
 
 public class ImageLikesManager {
 
-    private final String likesFilePath = "data/likes.txt";
+    /**
+     * Below could be an example of where we use thew new Config.java
+     * Instead of the hardcoded value
+    */
+
+    // private final String likesFilePath = "data/likes.txt";
+
+    private final String likesFilePath = Config.LIKES_FILE;
+
 
     // Method to like an image
     public void likeImage(String username, String imageID) throws IOException {
@@ -19,6 +27,13 @@ public class ImageLikesManager {
     }
 
     // Method to read likes from file
+
+    /**
+     * The old method below
+     * 
+    */
+
+    /* 
     private Map<String, Set<String>> readLikes() throws IOException {
         Map<String, Set<String>> likesMap = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(likesFilePath))) {
@@ -32,6 +47,25 @@ public class ImageLikesManager {
         }
         return likesMap;
     }
+    */
+
+    private Map<String, Set<String>> readLikes() throws IOException {
+        Map<String, Set<String>> likesMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(likesFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length < 2) continue; // Skip malformed lines
+                String imageID = parts[0];
+                Set<String> users = Arrays.stream(parts[1].split(","))
+                                          .map(String::trim)
+                                          .collect(Collectors.toSet());
+                likesMap.put(imageID, users);
+            }
+        }
+        return likesMap;
+    }
+    
 
     // Method to save likes to file
     private void saveLikes(Map<String, Set<String>> likesMap) throws IOException {
