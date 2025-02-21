@@ -1,10 +1,10 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a picture on Quackstagram
 class Picture {
-    private String imagePath;
-    private String caption;
+    private final String imagePath;
+    private final String caption;
     private int likesCount;
     private List<String> comments;
 
