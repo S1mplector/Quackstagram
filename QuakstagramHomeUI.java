@@ -1,3 +1,4 @@
+import com.sun.security.auth.login.ConfigFile;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -21,10 +22,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class QuakstagramHomeUI extends JFrame {
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Corrected static size for bottom icons
-    private static final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
+   //  private static final int NAV_ICON_SIZE 
+    private static final int IMAGE_WIDTH = Config.FRAME_HEIGHT - 100; // Width for the image posts
     private static final int IMAGE_HEIGHT = 150; // Height for the image posts
     private static final Color LIKE_BUTTON_COLOR = new Color(255, 90, 95); // Color for the like button
     private CardLayout cardLayout;
@@ -35,8 +36,8 @@ public class QuakstagramHomeUI extends JFrame {
 
     public QuakstagramHomeUI() {
         setTitle("Quakstagram Home");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setSize(Config.FRAME_SIZE);
+        setMinimumSize(Config.FRAME_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         cardLayout = new CardLayout();
@@ -61,7 +62,7 @@ public class QuakstagramHomeUI extends JFrame {
           lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
           lblRegister.setForeground(Color.WHITE); // Set the text color to white
           headerPanel.add(lblRegister);
-          headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
+          headerPanel.setPreferredSize(new Dimension(Config.FRAME_WIDTH, 40)); // Give the header a fixed height
         
           add(headerPanel, BorderLayout.NORTH);
 
@@ -177,7 +178,7 @@ public class QuakstagramHomeUI extends JFrame {
 
             // Grey spacing panel
             JPanel spacingPanel = new JPanel();
-            spacingPanel.setPreferredSize(new Dimension(WIDTH-10, 5)); // Set the height for spacing
+            spacingPanel.setPreferredSize(new Dimension(Config.FRAME_WIDTH-10, 5)); // Set the height for spacing
             spacingPanel.setBackground(new Color(230, 230, 230)); // Grey color for spacing
             panel.add(spacingPanel);
         }
@@ -297,7 +298,7 @@ private String[][] createSampleData() {
 
     private JButton createIconButton(String iconPath) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
+        Image iconScaled = iconOriginal.getImage().getScaledInstance(Config.NAV_ICON_SIZE, Config.NAV_ICON_SIZE, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(iconScaled));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setContentAreaFilled(false);
@@ -320,7 +321,7 @@ private String[][] createSampleData() {
 
          try {
                 BufferedImage originalImage = ImageIO.read(new File(postData[3]));
-                BufferedImage croppedImage = originalImage.getSubimage(0, 0, Math.min(originalImage.getWidth(), WIDTH-20), Math.min(originalImage.getHeight(), HEIGHT-40));
+                BufferedImage croppedImage = originalImage.getSubimage(0, 0, Math.min(originalImage.getWidth(), Config.FRAME_WIDTH-20), Math.min(originalImage.getHeight(), HEIGHT-40));
                 ImageIcon imageIcon = new ImageIcon(croppedImage);
                 fullSizeImageLabel.setIcon(imageIcon);
             } catch (IOException ex) {
@@ -387,7 +388,7 @@ private String[][] createSampleData() {
 
     private JButton createIconButton(String iconPath, String buttonType) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
+        Image iconScaled = iconOriginal.getImage().getScaledInstance(Config.NAV_ICON_SIZE, Config.NAV_ICON_SIZE, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(iconScaled));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setContentAreaFilled(false);
