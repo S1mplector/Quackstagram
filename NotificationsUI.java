@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,17 +6,18 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import javax.swing.*;
 
 public class NotificationsUI extends JFrame {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
+    // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
     
     public NotificationsUI() {
         setTitle("Notifications");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setSize(Config.FRAME_SIZE);
+        setMinimumSize(Config.FRAME_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         initializeUI();
@@ -110,7 +110,7 @@ private String getElapsedTime(String timestamp) {
           lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
           lblRegister.setForeground(Color.WHITE); // Set the text color to white
           headerPanel.add(lblRegister);
-          headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
+          headerPanel.setPreferredSize(new Dimension(Config.FRAME_WIDTH, 40)); // Give the header a fixed height
           return headerPanel;
     }
 
@@ -137,7 +137,7 @@ private String getElapsedTime(String timestamp) {
 
     private JButton createIconButton(String iconPath, String buttonType) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
+        Image iconScaled = iconOriginal.getImage().getScaledInstance(Config.NAV_ICON_SIZE, Config.NAV_ICON_SIZE, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(iconScaled));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setContentAreaFilled(false);
