@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -6,12 +5,13 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
 
 
 public class SignInUI extends JFrame {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
+    // private static final int WIDTH = 300;
+   // private static final int HEIGHT = 500;
 
     private JTextField txtUsername;
     private JTextField txtPassword;
@@ -22,8 +22,8 @@ public class SignInUI extends JFrame {
 
     public SignInUI() {
         setTitle("Quackstagram - Register");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setSize(Config.FRAME_SIZE);
+        setMinimumSize(Config.FRAME_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
         initializeUI();
@@ -37,7 +37,7 @@ public class SignInUI extends JFrame {
         lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
         lblRegister.setForeground(Color.WHITE); // Set the text color to white
         headerPanel.add(lblRegister);
-        headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
+        headerPanel.setPreferredSize(new Dimension(Config.FRAME_WIDTH, 40));
 
         // Profile picture placeholder without border
         lblPhoto = new JLabel();
@@ -155,7 +155,7 @@ private boolean verifyCredentials(String username, String password) {
 }
 
    private void saveUserInformation(User user) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/users.txt", false))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Config.USERS_FILE,false))) {
             writer.write(user.toString());  // Implement a suitable toString method in User class
         } catch (IOException e) {
             e.printStackTrace();
